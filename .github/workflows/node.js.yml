@@ -26,7 +26,12 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
       - name: Install dependencies and create lock file
-        run: npm install
+        run: |
+          npm install
+      - name: Created .env file
+        run: |
+          touch .env
+          echo "PORT=${{ secrets.PORT }}" > .env
       - name: Restart Learn CI/CD service
         run: |
           pm2 restart learn-cicd
