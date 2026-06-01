@@ -28,4 +28,5 @@ jobs:
       - name: Install dependencies and create lock file
         run: npm install
       - name: Restart Learn CI/CD service
-        run: pm2 restart learn-cicd
+        run: |
+          pm2 restart learn-cicd
