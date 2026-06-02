@@ -3,7 +3,9 @@ services:
   app:
     image: haidang218/learn-cicd:latest
     container_name: learn-cicd-app
+    env_file:
+      - .env
     ports:  
-      - "5005:5005"
+      - "${PORT}:5005"
     restart: unless-stopped
     
