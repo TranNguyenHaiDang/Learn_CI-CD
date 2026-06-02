@@ -11,7 +11,7 @@ on:
 
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: [self-hosted]
 
     strategy:
       matrix:
@@ -22,16 +22,13 @@ jobs:
       - uses: actions/checkout@v4
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: "npm"
-      - name: Install dependencies and create lock file
-        run: |
-          npm install
       - name: Created .env file
         run: |
           touch .env
           echo "PORT=${{ secrets.PORT }}" > .env
-      - name: Restart Learn CI/CD service
+      - name: Build docker image
         run: |
-          pm2 restart learn-cicd
+          docker build -t haidang218/learn-cicd:latest .
+      - name: Push docker image to Docker Hub
+        run: |
+          docker push haidang218/learn-cicd:latest
